@@ -49,7 +49,7 @@ El sistema esta conectado directamente con Moodle para sincronizar el progreso r
 
 Que si revientas el sistema no pasa nada, vamos. Solo lee datos de prod.
 
-## 🛠️ Stack Tecnológico 
+## 🛠️ Stack Tecnológico
 
 - **React + TypeScript**
 - **Three.js**

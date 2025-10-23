@@ -8,7 +8,8 @@ interface GamificationDashboardProps {
 interface Course {
   id: number;
   shortname: string;
-  fullname: string;
+  fullname?: string;
+  course_name?: string;
   progress: number;
   is_active?: boolean;
 }
@@ -482,24 +483,10 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                      progress: course.progress || 0
                    }));
                    
-                   // Cargar TODOS los cursos del historial (activos + inactivos)
-                   const allCoursesRes = await fetch(
-                     `${SUPABASE_URL}/rest/v1/course_progress?user_id=eq.${userData.id}&select=*`,
-                     {
-                       headers: {
-                         'apikey': SUPABASE_SERVICE_KEY,
-                         'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-                       }
-                     }
-                   );
-                   
-                   if (allCoursesRes.ok) {
-                     const allCourses = await allCoursesRes.json();
-                     setCourses(allCourses);
-                     console.log(`📚 Cargados ${allCourses.length} cursos del historial completo`);
-                   } else {
-                     setCourses(coursesData);
-                   }
+                   // Mostrar SOLO cursos activos desde Moodle (para la sección "Cursos Activos")
+                   // El sistema de guardado en Supabase sigue igual para el historial
+                   setCourses(coursesData);
+                   console.log(`📚 Mostrando ${coursesData.length} cursos activos desde Moodle`);
           
           // 3. Calcular puntos desde Moodle (cada 1% = 3 puntos)
           const currentMoodlePoints = coursesData.reduce(
