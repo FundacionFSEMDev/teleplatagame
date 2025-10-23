@@ -5,7 +5,7 @@
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Three.js](https://img.shields.io/badge/Three.js-0.158.0-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-3.0.0-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Database](https://img.shields.io/badge/Supabase-3.0.0-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
 [![Moodle](https://img.shields.io/badge/Moodle-API-FF6B35?style=for-the-badge&logo=moodle&logoColor=white)](https://moodle.org/)
 
 **Sistema de gamificación completo para la teleplataforma Moodle de la Fundación San Ezequiel Moreno**  
