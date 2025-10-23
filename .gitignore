@@ -10,6 +10,9 @@ config.json
 # Test files
 test-moodle-connection.js
 
+# Context file (local development only)
+CONTEXT.txt
+
 # OS files
 .DS_Store
 Thumbs.db

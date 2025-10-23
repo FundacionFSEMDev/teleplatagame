@@ -121,4 +121,5 @@ El proyecto se encuentra actualmente en desarrollo y con bastantes bugs, pero el
 
 
 **Última actualización**: Octubre 2025
-**Estado**: En desarrollo activo
+
+**Estado**: En desarrollo activo (pls send help)
