@@ -11,7 +11,7 @@
 **Sistema de gamificación completo para la teleplataforma Moodle de la Fundación San Ezequiel Moreno**  
 *Desarrollado desde cero.*
 
-[![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Producción-brightgreen?style=for-the-badge)](#)
+[![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)](#)
 [![Versión](https://img.shields.io/badge/Versión-1.0.0-blue?style=for-the-badge)](#)
 [![Líneas de Código](https://img.shields.io/badge/Líneas%20de%20Código-2500%2B-orange?style=for-the-badge)](#)
 
@@ -218,7 +218,7 @@ Copyright (c) 2025 Fundación San Ezequiel Moreno. Todos los derechos reservados
 
 ### 🚀 **Estado del Proyecto**
 
-[![Estado](https://img.shields.io/badge/Estado-En%20Producción-brightgreen?style=for-the-badge)](#)
+[![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)](#)
 [![Última Actualización](https://img.shields.io/badge/Última%20Actualización-Octubre%202025-blue?style=for-the-badge)](#)
 [![Versión](https://img.shields.io/badge/Versión-1.0.0-purple?style=for-the-badge)](#)
 
