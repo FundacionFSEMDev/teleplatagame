@@ -44,31 +44,31 @@ const Interactive3DModel = () => {
       language: 'Español',
       flagCode: 'es',
       flagUrl: 'https://flagcdn.com/w320/es.png',
-      url: 'https://fundacionsanezequiel.org/wp-content/uploads/2025/10/MANUAL-DE-USUARIO-TELEPLATAFORMA.pdf'
+      url: '#'
     },
     {
       language: 'English',
       flagCode: 'gb',
       flagUrl: 'https://flagcdn.com/w320/gb.png',
-      url: 'https://fundacionsanezequiel.org/wp-content/uploads/2025/10/MANUAL-DE-USUARIO-TELEPLATAFORMA_INGLES.pdf'
+      url: '#'
     },
     {
       language: 'Français',
       flagCode: 'fr',
       flagUrl: 'https://flagcdn.com/w320/fr.png',
-      url: 'https://fundacionsanezequiel.org/wp-content/uploads/2025/10/MANUAL-DE-USUARIO-TELEPLATAFORMA_FRANCES-1.pdf'
+      url: '#'
     },
     {
       language: 'Português',
       flagCode: 'pt',
       flagUrl: 'https://flagcdn.com/w320/pt.png',
-      url: 'https://fundacionsanezequiel.org/wp-content/uploads/2025/10/MANUAL-DE-USUARIO-TELEPLATAFORMA-PORTUGUES.pdf'
+      url: '#'
     },
     {
       language: 'العربية',
       flagCode: 'sa',
       flagUrl: 'https://flagcdn.com/w320/sa.png',
-      url: 'https://fundacionsanezequiel.org/wp-content/uploads/2025/10/MANUAL-DE-USUARIO-TELEPLATAFORMA_ARABE-1.pdf'
+      url: '#'
     }
   ]
 

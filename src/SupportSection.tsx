@@ -9,7 +9,7 @@ const SupportSection = () => {
       title: 'Problemas Técnicos',
       description: 'Errores de plataforma, acceso, carga de contenidos',
       icon: AlertCircle,
-      email: 'sistemas@fundacionsanezequiel.org',
+      email: 'support@eduhubrpg.com',
       color: 'from-red-500 to-red-700',
       bgColor: 'bg-red-50',
       borderColor: 'border-red-500'
@@ -205,7 +205,7 @@ const SupportSection = () => {
             No dudes en contactar con nuestro equipo de soporte. Estamos aquí para ayudarte.
           </p>
           <a
-            href="mailto:sistemas@fundacionsanezequiel.org"
+            href="mailto:support@eduhubrpg.com"
             className="inline-block mt-4 px-6 py-3 bg-white text-[#2563eb] font-semibold rounded-lg hover:bg-gray-100 transition-colors"
           >
             Contactar con soporte
