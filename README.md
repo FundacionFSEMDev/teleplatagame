@@ -1,4 +1,4 @@
-# 🎓 EduHubRPG - Sistema de Gamificación Educativa
+# EduHubRPG - Sistema de Gamificación Educativa
 
 <div align="center">
 
@@ -19,7 +19,7 @@
 
 ---
 
-## 🎯 ¿De que va el proyecto?
+## ¿De que va el proyecto?
 
 **EduHubRPG** externaliza la gamificación de plataformas educativas (como Moodle) añadiendo elementos de videojuegos RPG: niveles, experiencia, logros, items virtuales... para que estudiar sea menos aburrido.
 
@@ -27,7 +27,7 @@ Al estar externalizado, se tiene mas flexibilidad a la hora de añadir elementos
 
 **El proyecto esta en desarrollo haciendo uso de asistentes de código (Cursor principalmente), debido a la facilidad y rapidez de implementación.**
 
-## 🤔 ¿Por qué?
+## ¿Por qué?
 
 Todos los cursos que he hecho en plataformas de formación online se ceñían a sistemas de puntuaciones del año de la tana que no motivaban al usuario más allá de conseguir un diploma/certificado.
 
@@ -35,18 +35,18 @@ Añadiéndole el elemento RPG, conseguimos aumentar el % de finalización de los
 
 La idea surgió de la frustración de ver cómo la educación online se había quedado estancada en interfaces aburridas y sistemas de recompensas que no conectaban con los usuarios. Los videojuegos pueden mantener a la gente enganchada durante horas (y me apasionan), asi que se me ocurrió fusionar ambas cosas.
 
-### ✨ ¿Qué hace exactamente?
+### ¿Qué hace exactamente?
 
 <table>
 <tr>
 <td width="50%">
 
-#### 🎮 **Interfaz 3D Interactiva**
+#### **Interfaz 3D Interactiva**
 - Navegación drag & drop con físicas realistas (por pulir)
 - Renderizado optimizado con Three.js
 - Efectos visuales adaptados al estandar visual actual
 
-#### 🏆 **Sistema de Gamificación**
+#### **Sistema de Gamificación**
 - Experiencia, niveles y logros estilo RPG
 - Animaciones y UI 8-bit
 - Dashboard que muestra datos diretamente de la plataforma que se configure (via API)
@@ -54,12 +54,12 @@ La idea surgió de la frustración de ver cómo la educación online se había q
 </td>
 <td width="50%">
 
-#### 📚 **Integraciones**
+#### **Integraciones**
 - Se conecta con Moodle (o cualquier LMS que soporte API REST)
 - Base de datos externa para la permanencia de los datos de gamificación
 - Autenticación DB - LMS (Solo lectura, los datos de LMS permanecen intactos siempre)
 
-#### 🎨 **Diseño**
+#### **Diseño**
 - Glassmorphism y animaciones fluidas
 - Responsive 
 - Optimizado
@@ -70,9 +70,9 @@ La idea surgió de la frustración de ver cómo la educación online se había q
 
 ---
 
-## 🚀 ¿Qué se puede hacer?
+## ¿Qué se puede hacer?
 
-### ✅ **Funcionalidades implementadas**
+### **Funcionalidades implementadas**
 
 - [x] **Interfaz 3D** - Arrastrado de tarjetas con físicas realistas (componente de ReactBits: https://reactbits.dev/)
 - [x] **Sistema de autenticación** - Lee directamente de Moodle para identificar al usuario y sus avances. Accede a cualquier dato al que se le dé permiso en el web service.
@@ -82,7 +82,7 @@ La idea surgió de la frustración de ver cómo la educación online se había q
 - [x] **Responsive** - Funciona en cualquier dispositivo
 - [x] **Animaciones** - GSAP para efectos
 
-### 🔄 **Planes a futuro**
+### **Planes a futuro**
 
 - [ ] **Sistema de items, tienda y crafteo** - Stash y recompensas virtuales, tienda para venta/compra, mejora y crafteo de items de la misma rareza
 - [ ] **Leaderboards** - Rankings entre estudiantes de la plataforma (se planea que sea de participación opcional para la gente menos competitiva)
@@ -91,18 +91,18 @@ La idea surgió de la frustración de ver cómo la educación online se había q
 
 ---
 
-## 🎮 Gamificación
+## Gamificación
 
-### 🏆 **La idea inicial es:**
+### **La idea inicial es:**
 
-- ✅ **Persistencia** - Datos de gamificación persistentes aun que se desmatricule al usuario 
-- ✅ **Cálculo** - Basado en progreso real de los cursos activos del usuario (gestionado por estado is_active:true/false en DB).
-- ✅ **Sistema de EXP (tremendo dolor de cabeza)** - Fórmula matemática para escalado progresivo (no se pierde exp). Ratio de 30 puntos cada 10% de curso. Actualmente solo hay 5 niveles.
-- ✅ **Sincronización** - Todo se actualiza automáticamente en cada login del sistema.
+- **Persistencia** - Datos de gamificación persistentes aun que se desmatricule al usuario 
+- **Cálculo** - Basado en progreso real de los cursos activos del usuario (gestionado por estado is_active:true/false en DB).
+- **Sistema de EXP (tremendo dolor de cabeza)** - Fórmula matemática para escalado progresivo (no se pierde exp). Ratio de 30 puntos cada 10% de curso. Actualmente solo hay 5 niveles.
+- **Sincronización** - Todo se actualiza automáticamente en cada login del sistema.
 
 ---
 
-## 🛠️ Stack
+## Stack
 
 ### **Frontend**
 - **React 18.2.0** con TypeScript
@@ -121,11 +121,11 @@ La idea surgió de la frustración de ver cómo la educación online se había q
 - **Validación de datos** automática
 
 ### **Assets**
-- **Kenney UI Assets** - AlElementos de interfaz y gráficos (https://kenney.nl/)
+- **Kenney UI Assets** - Algunos elementos de interfaz y gráficos (https://kenney.nl/)
 
 ---
 
-## 📦 Instalación
+## Instalación
 
 ### Prerrequisitos
 - Node.js 18+ 
@@ -175,7 +175,7 @@ points_history     # Historial de puntos
 course_progress    # Progreso en cursos
 ```
 
-### 📋 **Migraciones disponibles**
+### **Migraciones disponibles**
 
 El sistema incluye 6 migraciones que **DEBEN ejecutarse en orden secuencial**:
 
@@ -184,46 +184,42 @@ El sistema incluye 6 migraciones que **DEBEN ejecutarse en orden secuencial**:
 3. **`003_functions_and_triggers.sql`** - Implementa funciones y triggers para el cálculo automático de puntos
 4. **`004_add_is_active_column.sql`** - Añade columna `is_active` a la tabla `users`
 5. **`005_add_is_active_to_course_progress.sql`** - Añade columna `is_active` a la tabla `course_progress`
-6. **`006_update_exp_calculation_logic.sql`** - **⚠️ IMPORTANTE: Arregla un bug crítico derivado de la migración 003**
+6. **`006_update_exp_calculation_logic.sql`** - **IMPORTANTE: Arregla un bug crítico derivado de la migración 003**
 
-> **🚨 CRÍTICO**: La migración 006 corrige un error en la lógica de cálculo de experiencia que se introdujo en la migración 003. Es **fundamental** ejecutar todas las migraciones en orden secuencial para evitar dolores de cabeza.
+> **CRÍTICO**: La migración 006 corrige un error en la lógica de cálculo de experiencia que se introdujo en la migración 003. Es **fundamental** ejecutar todas las migraciones en orden secuencial para evitar dolores de cabeza.
 
 ---
 
-## 🎯 Casos de uso
+## Casos de uso
 
-### 👨‍🎓 **Para estudiantes**
+### **Para estudiantes**
 1. **Intuitivo** desde tu plataforma educativa (Integrable via <iframe>)
 2. **Navegación 3D** arrastrando tarjetas
 3. **Gamificación del aprendizaje** con puntos y niveles
 4. **Progreso visual** con animaciones retro
 5. **Experiencia inmersiva** que motiva a seguir aprendiendo
 
-### 👨‍💼 **Para administradores**
+### **Para administradores**
 - **Integración transparente, sencilla y segura** con tu plataforma existente (solo lee)
 
 ---
 
-
----
-
-## 🎨 Personalización
+## Personalización
 
 ### **Paleta**
 - **Color principal**: `#2563eb` (Azul)
 - **Fondo**: Blanco puro
 
-
 ---
 
-## 📄 Licencia
+## Licencia
 
 El proyecto lo he creado porque me gusta programar y así practico, por lo que, básicamente, puedes hacer lo que quieras con él:
 
-- ✅ Usarlo en proyectos comerciales
-- ✅ Modificarlo a tu gusto
-- ✅ Distribuirlo libremente
-- ✅ Meterle  clone y crear tu propia versión
+- Usarlo en proyectos comerciales
+- Modificarlo a tu gusto
+- Distribuirlo libremente
+- Meterle  clone y crear tu propia versión
 
 **Solo pido una cosa**: Si lo usas, nunca viene mal algún consejo o mejora. No cuesta nada y me sirve para mejorar.
 
@@ -231,13 +227,12 @@ El proyecto lo he creado porque me gusta programar y así practico, por lo que, 
 
 <div align="center">
 
-### 🚀 **Estado**
+### **Estado**
 
 [![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)](#)
 [![Última Actualización](https://img.shields.io/badge/Última%20Actualización-Octubre%202025-blue?style=for-the-badge)](#)
 [![Versión](https://img.shields.io/badge/Versión-1.0.0-purple?style=for-the-badge)](#)
 
 **Idea, conceptualización y desarrollo inicial por**: **David Conde Gutierrez**
-
 
 </div>
