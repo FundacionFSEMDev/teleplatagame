@@ -46,7 +46,7 @@ const createIconTexture = (cardType: CardType) => {
   const text = textMap[cardType];
   const iconSize = 400;
   const svgString = renderToStaticMarkup(
-    <Icon size={iconSize} strokeWidth={2.5} color="#5d0008" />
+    <Icon size={iconSize} strokeWidth={2.5} color="#2563eb" />
   );
 
   const canvas = document.createElement('canvas');
@@ -79,7 +79,7 @@ const createIconTexture = (cardType: CardType) => {
       // Añadir texto en la parte SUPERIOR del canvas para que aparezca abajo al invertir
       let textY = 400; // Posición inicial
       const lineHeight = 80; // Espacio entre líneas aumentado
-      ctx.fillStyle = '#5d0008';
+      ctx.fillStyle = '#2563eb';
       ctx.font = '900 70px Arial Black, Arial, sans-serif';
       ctx.textAlign = 'left';
       
@@ -290,8 +290,8 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardType = 'courses', onRelease }: 
     // Fondo transparente (no dibujar nada)
     ctx.clearRect(0, 0, 512, 256);
     
-    // Texto en color #5d0008
-    ctx.fillStyle = '#5d0008';
+    // Texto en color #2563eb
+    ctx.fillStyle = '#2563eb';
     ctx.font = 'bold 80px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -355,7 +355,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardType = 'courses', onRelease }: 
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
-          color="#5d0008"
+          color="#2563eb"
           depthTest={false}
           resolution={isSmall ? [1000, 2000] : [1000, 1000]}
           useMap={false}

@@ -127,13 +127,13 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
       <div className="text-center mb-8">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-[#5d0008] hover:text-[#8b0012] transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-[#2563eb] hover:text-[#1d4ed8] transition-colors mb-6"
         >
           <ArrowLeft className="w-5 h-5" />
           <span>Volver a cursos</span>
         </button>
 
-        <h1 className="text-4xl font-bold text-[#5d0008] mb-4">
+        <h1 className="text-4xl font-bold text-[#2563eb] mb-4">
           Formulario de Interés
         </h1>
         <p className="text-xl text-gray-600 mb-2">
@@ -169,7 +169,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] ${
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] ${
                   errors.nombre ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Tu nombre"
@@ -190,7 +190,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="apellidos"
                 value={formData.apellidos}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] ${
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] ${
                   errors.apellidos ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Tus apellidos"
@@ -211,7 +211,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="telefono"
                 value={formData.telefono}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] ${
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] ${
                   errors.telefono ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="+34 600 000 000"
@@ -232,7 +232,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="fechaNacimiento"
                 value={formData.fechaNacimiento}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] ${
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] ${
                   errors.fechaNacimiento ? 'border-red-500' : 'border-gray-300'
                 }`}
               />
@@ -252,7 +252,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="nacionalidad"
                 value={formData.nacionalidad}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] ${
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] ${
                   errors.nacionalidad ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Tu nacionalidad"
@@ -273,7 +273,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
                 placeholder="tu@email.com"
               />
             </div>
@@ -295,7 +295,7 @@ const CourseInterestForm: React.FC<CourseInterestFormProps> = ({ course, onBack 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>

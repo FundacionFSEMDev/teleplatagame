@@ -705,7 +705,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         textAlign: 'center',
         padding: '40px',
         fontSize: '12px',
-        color: '#5d0008'
+        color: '#2563eb'
       }}>
         LOADING...
       </div>
@@ -732,12 +732,12 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         }
         
         .kenney-scrollbar::-webkit-scrollbar-thumb {
-          background: #5d0008;
+          background: #2563eb;
           border: 2px solid #333;
         }
         
         .kenney-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #8b0012;
+          background: #1d4ed8;
         }
 
         @media (max-width: 768px) {
@@ -795,13 +795,13 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
 
         @keyframes screenFlash {
           0% {
-            background: rgba(93, 0, 8, 0);
+            background: rgba(37, 99, 235, 0);
           }
           50% {
-            background: rgba(255, 215, 0, 0.3);
+            background: rgba(37, 99, 235, 0.3);
           }
           100% {
-            background: rgba(93, 0, 8, 0.95);
+            background: rgba(37, 99, 235, 0.95);
           }
         }
 
@@ -816,10 +816,10 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
 
         @keyframes numberGlow {
           0%, 100% {
-            text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8), 0 0 20px rgba(37, 99, 235, 0.5);
           }
           50% {
-            text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.8);
+            text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.8), 0 0 40px rgba(37, 99, 235, 0.8);
           }
         }
 
@@ -829,12 +829,11 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(93, 0, 8, 0.95);
+          background: rgba(37, 99, 235, 0.95);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 9999;
-          animation: screenFlash 0.8s ease-in-out;
         }
 
         .level-up-content {
@@ -880,7 +879,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         textAlign: 'center',
         marginBottom: '20px',
         padding: '16px',
-        backgroundColor: '#5d0008',
+        backgroundColor: '#2563eb',
         color: 'white',
         borderRadius: '0',
         fontSize: '12px',
@@ -935,7 +934,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
               boxShadow: '3px 3px 0px rgba(0,0,0,0.2)'
             }}>
               <div style={{ fontSize: '9px', color: '#666', marginBottom: '6px' }}>EXP</div>
-              <div style={{ fontSize: '20px', color: '#5d0008', fontWeight: 'bold' }}>{totalPoints}</div>
+              <div style={{ fontSize: '20px', color: '#2563eb', fontWeight: 'bold' }}>{totalPoints}</div>
             </div>
 
             {/* LEVEL */}
@@ -947,7 +946,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
               boxShadow: '3px 3px 0px rgba(0,0,0,0.2)'
             }}>
               <div style={{ fontSize: '9px', color: '#666', marginBottom: '6px' }}>NIVEL</div>
-              <div style={{ fontSize: '20px', color: '#5d0008', fontWeight: 'bold' }}>{currentLevel}</div>
+              <div style={{ fontSize: '20px', color: '#2563eb', fontWeight: 'bold' }}>{currentLevel}</div>
             </div>
 
             {/* CURSOS */}
@@ -959,7 +958,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
               boxShadow: '3px 3px 0px rgba(0,0,0,0.2)'
             }}>
               <div style={{ fontSize: '9px', color: '#666', marginBottom: '6px' }}>CURSOS</div>
-              <div style={{ fontSize: '20px', color: '#5d0008', fontWeight: 'bold' }}>{courses.length}</div>
+              <div style={{ fontSize: '20px', color: '#2563eb', fontWeight: 'bold' }}>{courses.length}</div>
             </div>
           </div>
 
@@ -980,11 +979,11 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                      }}>
                        <span>NIVEL {displayLevel}</span>
                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                         <span style={{ color: '#5d0008' }}>{totalPoints} EXP</span>
+                         <span style={{ color: '#2563eb' }}>{totalPoints} EXP</span>
                          {isAnimating && (
                            <span style={{ 
                              fontSize: '8px', 
-                             color: '#5d0008',
+                             color: '#2563eb',
                              animation: 'pulse 1s ease-in-out infinite'
                            }}>
                              ⚡
@@ -1022,7 +1021,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                 left: 0,
                 bottom: 0,
                 width: `${Math.min(animatedProgress, 100)}%`,
-                background: 'linear-gradient(180deg, #8b0012 0%, #5d0008 50%, #4a0006 100%)',
+                background: 'linear-gradient(180deg, #1d4ed8 0%, #2563eb 50%, #1e40af 100%)',
                 transition: 'none', // Sin transition CSS, usamos JS animation
                 boxShadow: 'inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.3)'
               }} />
@@ -1086,7 +1085,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                   key={badge.id}
                   style={{
                     aspectRatio: '1',
-                    backgroundColor: badge.unlocked ? '#5d0008' : '#e0e0e0',
+                    backgroundColor: badge.unlocked ? '#2563eb' : '#e0e0e0',
                     border: '3px solid #333',
                     display: 'flex',
                     alignItems: 'center',
@@ -1203,7 +1202,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                         left: 0,
                         bottom: 0,
                         width: `${Math.min(course.progress, 100)}%`,
-                        background: 'linear-gradient(180deg, #8b0012 0%, #5d0008 50%, #4a0006 100%)',
+                        background: 'linear-gradient(180deg, #1d4ed8 0%, #2563eb 50%, #1e40af 100%)',
                         transition: 'width 0.5s ease',
                         boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.3)'
                       }} />
@@ -1238,7 +1237,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                     <div style={{
                       fontSize: '8px',
                       marginTop: '6px',
-                      color: '#5d0008',
+                      color: '#2563eb',
                       textAlign: 'right',
                       fontWeight: 'bold'
                     }}>
@@ -1260,7 +1259,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         textAlign: 'center',
         boxShadow: '3px 3px 0px rgba(0,0,0,0.2)',
         fontSize: '9px',
-        color: '#5d0008',
+        color: '#2563eb',
         lineHeight: '1.6',
         fontWeight: 'bold',
         letterSpacing: '0.5px'

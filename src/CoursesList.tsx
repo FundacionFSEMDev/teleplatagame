@@ -170,7 +170,7 @@ const CoursesList: React.FC<CoursesListProps> = ({ onCourseInterest }) => {
     <div className="max-w-7xl mx-auto">
       {/* Título */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-[#5d0008] mb-4">
+        <h1 className="text-4xl font-bold text-[#2563eb] mb-4">
           Catálogo de Cursos
         </h1>
         <p className="text-xl text-gray-600">
@@ -189,7 +189,7 @@ const CoursesList: React.FC<CoursesListProps> = ({ onCourseInterest }) => {
               placeholder="Buscar cursos por nombre, categoría o habilidades..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
             />
           </div>
 
@@ -199,7 +199,7 @@ const CoursesList: React.FC<CoursesListProps> = ({ onCourseInterest }) => {
             <select
               value={levelFilter}
               onChange={(e) => setLevelFilter(e.target.value as any)}
-              className="pl-12 pr-8 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5d0008] focus:border-transparent appearance-none bg-white cursor-pointer"
+              className="pl-12 pr-8 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent appearance-none bg-white cursor-pointer"
             >
               <option value="all">Todos los niveles</option>
               <option value="beginner">Principiante</option>
@@ -228,10 +228,10 @@ const CoursesList: React.FC<CoursesListProps> = ({ onCourseInterest }) => {
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {/* Header del curso */}
-              <div className="bg-gradient-to-r from-[#5d0008] to-[#8b0012] p-6">
+              <div className="bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] p-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-[#5d0008]" />
+                    <Icon className="w-6 h-6 text-[#2563eb]" />
                   </div>
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${levelColors[course.level]}`}>
                     {levelLabels[course.level]}
@@ -270,7 +270,7 @@ const CoursesList: React.FC<CoursesListProps> = ({ onCourseInterest }) => {
                 {isFunctional ? (
                   <button
                     onClick={() => onCourseInterest(course)}
-                    className="w-full bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                    className="w-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                   >
                     Me interesa
                   </button>

@@ -179,13 +179,13 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
             <div
               className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
               style={{
-                background: 'linear-gradient(135deg, #5d0008 0%, #8b0012 100%)',
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
                 boxShadow: '0 10px 25px -5px rgba(93, 0, 8, 0.4)'
               }}
             >
               <Mail size={32} color="white" />
             </div>
-            <h2 className="text-2xl font-bold text-center" style={{ color: '#5d0008' }}>
+            <h2 className="text-2xl font-bold text-center" style={{ color: '#2563eb' }}>
               Accede con tu Email
             </h2>
             <p className="text-gray-600 text-center mt-2">
@@ -196,7 +196,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#5d0008' }}>
+              <label className="block text-sm font-medium mb-2" style={{ color: '#2563eb' }}>
                 Email
               </label>
               <input
@@ -211,7 +211,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
                   borderColor: '#e5e7eb',
                   backgroundColor: isLoading ? '#f3f4f6' : 'white'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#5d0008'}
+                onFocus={(e) => e.target.style.borderColor = '#2563eb'}
                 onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               />
             </div>
@@ -223,7 +223,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
               style={{
                 background: isLoading 
                   ? '#9ca3af' 
-                  : 'linear-gradient(135deg, #5d0008 0%, #8b0012 100%)',
+                  : 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
                 boxShadow: isLoading 
                   ? 'none' 
                   : '0 10px 25px -5px rgba(93, 0, 8, 0.4)',
@@ -247,7 +247,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
           {/* Info adicional */}
           <div className="mt-6 p-4 rounded-lg" style={{ background: 'rgba(93, 0, 8, 0.05)' }}>
             <p className="text-sm text-gray-600 text-center">
-              <AlertCircle size={16} className="inline mr-1" style={{ color: '#5d0008' }} />
+              <AlertCircle size={16} className="inline mr-1" style={{ color: '#2563eb' }} />
               Solo para alumnos matriculados en la plataforma
             </p>
           </div>
@@ -278,7 +278,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
             {/* Mensaje según tipo de error */}
             {errorType === 'not_registered' ? (
               <>
-                <h3 className="text-2xl font-bold text-center mb-4" style={{ color: '#5d0008' }}>
+                <h3 className="text-2xl font-bold text-center mb-4" style={{ color: '#2563eb' }}>
                   ¡Ups! No estás registrado
                 </h3>
                 <p className="text-gray-600 text-center mb-6">
@@ -289,7 +289,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
               </>
             ) : (
               <>
-                <h3 className="text-2xl font-bold text-center mb-4" style={{ color: '#5d0008' }}>
+                <h3 className="text-2xl font-bold text-center mb-4" style={{ color: '#2563eb' }}>
                   No estás matriculado
                 </h3>
                 <p className="text-gray-600 text-center mb-6">
@@ -309,7 +309,7 @@ export default function GamificationLogin({ onSuccess, onViewCourses }: Gamifica
                 }}
                 className="w-full py-3 rounded-lg font-bold text-white transition-all duration-300"
                 style={{
-                  background: 'linear-gradient(135deg, #5d0008 0%, #8b0012 100%)',
+                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
                   boxShadow: '0 10px 25px -5px rgba(93, 0, 8, 0.4)'
                 }}
               >

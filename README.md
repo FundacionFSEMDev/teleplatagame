@@ -1,15 +1,15 @@
-# 🎓 Teleplataforma - Sistema de Gamificación Educativa
+# 🎓 EduHubRPG - Sistema de Gamificación Educativa
 
 <div align="center">
 
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Three.js](https://img.shields.io/badge/Three.js-0.158.0-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
-[![Database](https://img.shields.io/badge/Supabase-3.0.0-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org/)
 [![Moodle](https://img.shields.io/badge/Moodle-API-FF6B35?style=for-the-badge&logo=moodle&logoColor=white)](https://moodle.org/)
 
-**Sistema de gamificación completo para la teleplataforma Moodle de la Fundación San Ezequiel Moreno**  
-*Desarrollado desde cero.*
+**Sistema de gamificación completo para plataformas educativas**  
+*Desarrollado desde cero por David Conde Gutierrez*
 
 [![Estado del Proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)](#)
 [![Versión](https://img.shields.io/badge/Versión-1.0.0-blue?style=for-the-badge)](#)
@@ -19,38 +19,50 @@
 
 ---
 
-## 🎯 Descripción del Proyecto
+## 🎯 ¿De que va el proyecto?
 
-Una **landing page externa de gamificación** que combina una interfaz 3D inmersiva con un sistema de gamificación robusto, diseñada para complementar y gamificar la experiencia de aprendizaje en la plataforma Moodle existente de la Fundación San Ezequiel Moreno.
+**EduHubRPG** externaliza la gamificación de plataformas educativas (como Moodle) añadiendo elementos de videojuegos RPG: niveles, experiencia, logros, items virtuales... para que estudiar sea menos aburrido.
 
-### ✨ Características Principales
+Al estar externalizado, se tiene mas flexibilidad a la hora de añadir elementos o módificar los existentes conforme a las necesidades que tengamos.
+
+**El proyecto esta en desarrollo haciendo uso de asistentes de código (Cursor principalmente), debido a la facilidad y rapidez de implementación.**
+
+## 🤔 ¿Por qué?
+
+Todos los cursos que he hecho en plataformas de formación online se ceñían a sistemas de puntuaciones del año de la tana que no motivaban al usuario más allá de conseguir un diploma/certificado.
+
+Añadiéndole el elemento RPG, conseguimos aumentar el % de finalización de los usuarios en los cursos, ya sea motivados por el sentimiento de gratificación de obtener una recompensa útil tras un duro esfuerzo o por el ansia de complecionismo.
+
+La idea surgió de la frustración de ver cómo la educación online se había quedado estancada en interfaces aburridas y sistemas de recompensas que no conectaban con los usuarios. Los videojuegos pueden mantener a la gente enganchada durante horas (y me apasionan), asi que se me ocurrió fusionar ambas cosas.
+
+### ✨ ¿Qué hace exactamente?
 
 <table>
 <tr>
 <td width="50%">
 
-#### 🎮 **Interfaz 3D Inmersiva**
-- Navegación mediante drag & drop
-- Física realista
-- Render optimizado con Three.js
+#### 🎮 **Interfaz 3D Interactiva**
+- Navegación drag & drop con físicas realistas (por pulir)
+- Renderizado optimizado con Three.js
+- Efectos visuales adaptados al estandar visual actual
 
 #### 🏆 **Sistema de Gamificación**
-- Experiencia, niveles y logros
-- Animaciones 8-bit style
-- Dashboard pixelart interactivo
+- Experiencia, niveles y logros estilo RPG
+- Animaciones y UI 8-bit
+- Dashboard que muestra datos diretamente de la plataforma que se configure (via API)
 
 </td>
 <td width="50%">
 
 #### 📚 **Integraciones**
-- Sincronizado con Moodle
-- Base de datos externa para la gamificación y permanencia de datos
-- Sistema de autenticación integrado con validación bidireccional
+- Se conecta con Moodle (o cualquier LMS que soporte API REST)
+- Base de datos externa para la permanencia de los datos de gamificación
+- Autenticación DB - LMS (Solo lectura, los datos de LMS permanecen intactos siempre)
 
-#### 🎨 **Diseño Moderno**
+#### 🎨 **Diseño**
 - Glassmorphism y animaciones fluidas
-- Responsive design
-- Optimización de performance
+- Responsive 
+- Optimizado
 
 </td>
 </tr>
@@ -58,170 +70,174 @@ Una **landing page externa de gamificación** que combina una interfaz 3D inmers
 
 ---
 
-## 🚀 Funcionalidades Implementadas
+## 🚀 ¿Qué se puede hacer?
 
-### ✅ **Completado**
+### ✅ **Funcionalidades implementadas**
 
-- [x] **Interfaz 3D Interactiva** - Navegación con física realista
-- [x] **Sistema de Autenticación** - Integración completa con Moodle
-- [x] **Dashboard de Gamificación** - Interfaz pixelart con animaciones
-- [x] **Sincronización de Datos** - Moodle ↔ Database en tiempo real
-- [x] **Sistema de Migraciones** - Automatización de cambios de DB
-- [x] **Responsive Design** - Optimizado a todos los dispositivos
-- [x] **Animaciones Avanzadas** - GSAP para transiciones cinematográficas
+- [x] **Interfaz 3D** - Arrastrado de tarjetas con físicas realistas (componente de ReactBits: https://reactbits.dev/)
+- [x] **Sistema de autenticación** - Lee directamente de Moodle para identificar al usuario y sus avances. Accede a cualquier dato al que se le dé permiso en el web service.
+- [x] **Dashboard** - UI con animaciones (por pulir)
+- [x] **Sincronización** - Consulta el LMS al acceder y actualiza la base de datos solo si detecta cambios en los datos del usuario
+- [x] **Migraciones** - Sistema automatizado con logs detallados para cada statement SQL ejecutado (desarrollado con Cursor)
+- [x] **Responsive** - Funciona en cualquier dispositivo
+- [x] **Animaciones** - GSAP para efectos
 
-### 🔄 **En Desarrollo**
+### 🔄 **Planes a futuro**
 
-- [ ] **Sistema de Items** - Stash y Recompensas
-- [ ] **Leaderboard Global** - Rankings
-- [ ] **Sistema de Misiones** - Objetivos dinámicos
-- [ ] **Analytics Avanzados** - Métricas de aprendizaje
-
----
-
-## 🎮 Sistema de Gamificación
-
-### 🏆 **Características Implementadas**
-
-- ✅ **Permanencia de datos** - Los puntos de experiencia son permanentes entre sesiones
-- ✅ **Cálculo dinámico** - Basado en progreso real de cursos del estudiante
-- ✅ **Sistema de EXP** - Fórmula matemática para escalado incremental
-- ✅ **Animaciones retro** - Efectos visuales estilo 8-bits
-- ✅ **Dashboard interactivo** - Interfaz pixelart con animaciones
-- ✅ **Sincronización en tiempo real** - Integración completa con Moodle
+- [ ] **Sistema de items, tienda y crafteo** - Stash y recompensas virtuales, tienda para venta/compra, mejora y crafteo de items de la misma rareza
+- [ ] **Leaderboards** - Rankings entre estudiantes de la plataforma (se planea que sea de participación opcional para la gente menos competitiva)
+- [ ] **Sistema de misiones** - Objetivos dinámicos que añadan metas a corto/medio y largo plazo para asegurar la permanencia del estudiante.
+- [ ] **Analytics** - Métricas visuales para gestores en una dashboard adaptada a necesidades realistas. 
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## 🎮 Gamificación
 
-```mermaid
-graph TB
-    A[Usuario] --> B[Interfaz 3D React]
-    B --> C[Sistema de Gamificación]
-    C --> D[Base de Datos]
-    B --> E[API Moodle]
-    E --> F[Plataforma Educativa]
-    D --> G[Dashboard de Logros]
-    C --> H[Trigger de Animaciones GSAP]
+### 🏆 **La idea inicial es:**
+
+- ✅ **Persistencia** - Datos de gamificación persistentes aun que se desmatricule al usuario 
+- ✅ **Cálculo** - Basado en progreso real de los cursos activos del usuario (gestionado por estado is_active:true/false en DB).
+- ✅ **Sistema de EXP (tremendo dolor de cabeza)** - Fórmula matemática para escalado progresivo (no se pierde exp). Ratio de 30 puntos cada 10% de curso. Actualmente solo hay 5 niveles.
+- ✅ **Sincronización** - Todo se actualiza automáticamente en cada login del sistema.
+
+---
+
+## 🛠️ Stack
+
+### **Frontend**
+- **React 18.2.0** con TypeScript
+- **Three.js**  3D
+- **GSAP** animaciones
+- **TailwindCSS** responsividad
+
+### **Backend**
+- **PostgreSQL**  base de datos
+- **Migraciones automatizadas a través de script** por operatividad
+- **Funciones y triggers** personalizados
+
+### **Integración**
+- **Moodle API** para sincronización
+- **Autenticación bidireccional**
+- **Validación de datos** automática
+
+### **Assets**
+- **Kenney UI Assets** - AlElementos de interfaz y gráficos (https://kenney.nl/)
+
+---
+
+## 📦 Instalación
+
+### Prerrequisitos
+- Node.js 18+ 
+- npm o yarn
+- Base de datos PostgreSQL (Supabase, por ejemplo: https://supabase.com/)
+- Moodle Web Services API o API REST de LMS 
+
+### CLI
+
+```bash
+# 1. Clona el repo
+git clone https://github.com/superpin9899/EduHubRPG.git
+
+# 2. Instala las dependencias
+npm install
+
+# 3. Configurar DB
+# Crear archivo config.json con creds (AÑADIR config.json a .gitignore):
+{
+  "supabase": {
+    "url": "https://tu-proyecto.supabase.co",
+    "serviceKey": "tu-service-key-aqui"
+  },
+  "moodle": {
+    "url": "https://tu-moodle.com",
+    "token": "tu-token-aqui"
+  }
+}
+
+# 4. Para ejecutar las migraciones
+npm run migrate
+
+# 5. Para testing:
+npm run dev
 ```
 
-### 🛠️ Stack Tecnológico
+### Configuración de la DB
 
-<div align="center">
+El proyecto incluye migraciones automáticas que crean todas las tablas necesarias:
 
-| **Frontend** | **Backend** | **Integración** |
-|:------------:|:-----------:|:---------------:|
-| React 18.2.0 | Secret:) | Moodle API |
-| TypeScript | PostgreSQL | Web Services |
-| Three.js | Migraciones | Autenticación |
-| GSAP | Triggers | Sincronización |
-| TailwindCSS | Funciones | Validación |
+```sql
+-- Tablas principales que se crean automáticamente:
+users              # Usuarios sincronizados
+badges             # Logros disponibles  
+user_badges        # Logros desbloqueados
+points_history     # Historial de puntos
+course_progress    # Progreso en cursos
+```
 
-</div>
+### 📋 **Migraciones disponibles**
 
-### 📊 **Métricas del Proyecto**
+El sistema incluye 6 migraciones que **DEBEN ejecutarse en orden secuencial**:
 
-<div align="center">
+1. **`001_test_connection.sql`** - Verifica que la conexión de cursor a la base de datos funciona
+2. **`002_gamification_system.sql`** - Crea las tablas principales del sistema de gamificación
+3. **`003_functions_and_triggers.sql`** - Implementa funciones y triggers para el cálculo automático de puntos
+4. **`004_add_is_active_column.sql`** - Añade columna `is_active` a la tabla `users`
+5. **`005_add_is_active_to_course_progress.sql`** - Añade columna `is_active` a la tabla `course_progress`
+6. **`006_update_exp_calculation_logic.sql`** - **⚠️ IMPORTANTE: Arregla un bug crítico derivado de la migración 003**
 
-| **Métrica** | **Valor** |
-|:-----------:|:---------:|
-| 📝 Líneas de código | 2,500+ |
-| 🧩 Componentes React | 15+ |
-| 🗄️ Migraciones SQL | 6 |
-| 🔗 APIs | 2 |
-| 🛠️ Tecnologías | 8+ |
-
-</div>
+> **🚨 CRÍTICO**: La migración 006 corrige un error en la lógica de cálculo de experiencia que se introdujo en la migración 003. Es **fundamental** ejecutar todas las migraciones en orden secuencial para evitar dolores de cabeza.
 
 ---
 
-## 🎯 Casos de Uso
+## 🎯 Casos de uso
 
-### 👨‍🎓 **Para Estudiantes**
-1. **Acceso intuitivo** desde la plataforma Moodle existente
-2. **Navegación 3D** mediante drag & drop de tarjetas
-3. **Gamificación del aprendizaje y engagement** con puntos y niveles
-4. **Progreso visual** con animaciones retro gaming
-5. **Experiencia inmersiva** que motiva el aprendizaje
+### 👨‍🎓 **Para estudiantes**
+1. **Intuitivo** desde tu plataforma educativa (Integrable via <iframe>)
+2. **Navegación 3D** arrastrando tarjetas
+3. **Gamificación del aprendizaje** con puntos y niveles
+4. **Progreso visual** con animaciones retro
+5. **Experiencia inmersiva** que motiva a seguir aprendiendo
 
-### 👨‍💼 **Para Administradores**
-- **Métricas detalladas** de progreso estudiantil
-- **Integración transparente** con Moodle existente
-- **Dashboard administrativo** para monitoreo
-- **Sistema de respaldos** automatizado
+### 👨‍💼 **Para administradores**
+- **Integración transparente, sencilla y segura** con tu plataforma existente (solo lee)
 
 ---
 
-## 🏆 Logros Técnicos
-
-<div align="center">
-
-### 🎯 **Desafíos Superados**
-
-| **Desafío** | **Solución Implementada** |
-|:-----------:|:-------------------------:|
-| 🔄 **Integración compleja** | Conexión bidireccional entre Moodle y Database |
-| 🎮 **Física realista** | Implementación de Rapier para interacciones 3D |
-| ⚡ **Optimización** | Lazy loading y memoización avanzada |
-| 🗄️ **Migraciones** | Automatización completa de cambios de BD |
-| 🎨 **Animaciones** | GSAP para transiciones profesionales |
-
-</div>
 
 ---
 
-## 🎨 Identidad Visual
+## 🎨 Personalización
 
-<div align="center">
+### **Paleta**
+- **Color principal**: `#2563eb` (Azul)
+- **Fondo**: Blanco puro
 
-| **Elemento** | **Especificación** |
-|:------------:|:-----------------:|
-| 🎨 **Color principal** | `#5d0008` (Borgoña corporativo) |
-| ⚪ **Fondo** | Blanco puro |
-| ✨ **Efectos** | Glassmorphism |
-| 🎮 **Estilo gaming** | Pixelart retro |
-
-</div>
-
----
-
-## 📱 Responsive Design
-
-<div align="center">
-
-| **Dispositivo** | **Optimización** |
-|:---------------:|:----------------:|
-| 📱 **Móvil** | Interfaz adaptativa con touch |
-| 💻 **Tablet** | Layout híbrido |
-| 🖥️ **Desktop** | Experiencia 3D |
-| 📺 **Pantallas grandes** | Escalado automático |
-
-</div>
-
----
-
-## 🤝 Contribución
-
-Este proyecto es desarrollado por el equipo de Sistemas de la **Fundación San Ezequiel Moreno**. 
-
-Para consultas sobre el proyecto, contactar con el equipo de desarrollo.
 
 ---
 
 ## 📄 Licencia
 
-Copyright (c) 2025 Fundación San Ezequiel Moreno. Todos los derechos reservados.
+El proyecto lo he creado porque me gusta programar y así practico, por lo que, básicamente, puedes hacer lo que quieras con él:
+
+- ✅ Usarlo en proyectos comerciales
+- ✅ Modificarlo a tu gusto
+- ✅ Distribuirlo libremente
+- ✅ Meterle  clone y crear tu propia versión
+
+**Solo pido una cosa**: Si lo usas, nunca viene mal algún consejo o mejora. No cuesta nada y me sirve para mejorar.
 
 ---
 
 <div align="center">
 
-### 🚀 **Estado del Proyecto**
+### 🚀 **Estado**
 
 [![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)](#)
 [![Última Actualización](https://img.shields.io/badge/Última%20Actualización-Octubre%202025-blue?style=for-the-badge)](#)
 [![Versión](https://img.shields.io/badge/Versión-1.0.0-purple?style=for-the-badge)](#)
 
-**Desarrollado por**: Fundación San Ezequiel Moreno - Sistemas: **David Conde Gutierrez.**
+**Idea, conceptualización y desarrollo inicial por**: **David Conde Gutierrez**
+
 
 </div>

@@ -81,7 +81,7 @@ function App() {
       <main className="min-h-screen flex flex-col relative z-10" style={{ overflow: 'visible', padding: currentSection === 'menu' ? '0' : '1rem 1rem 3rem' }}>
         {currentSection === 'menu' && (
           <>
-            {/* Banner de ancho completo con logo y hint */}
+            {/* Banner de ancho completo limpio */}
             <div 
               className="w-full relative z-20 animate-fade-in"
               style={{
@@ -94,48 +94,7 @@ function App() {
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)'
               }}
             >
-              <div className="flex items-center justify-between">
-                {/* Logo a la izquierda */}
-                <img
-                  src="https://fundacionsanezequiel.org/wp-content/uploads/2025/03/SanEzequielMoreno_Logotipo-scaled.png"
-                  alt="Fundación San Ezequiel Moreno"
-                  style={{
-                    height: '10vh',
-                    width: 'auto',
-                    objectFit: 'contain'
-                  }}
-                />
-
-                {/* Hint estilo videojuegos a la derecha */}
-                <div 
-                  style={{
-                    animation: 'pulse 2s ease-in-out infinite'
-                  }}
-                >
-                  <div 
-                    className="border-2 shadow-xl flex items-center"
-                    style={{
-                      padding: '0.75vh 1.2vw',
-                      borderRadius: '0.6rem',
-                      background: 'rgba(93, 0, 8, 0.95)',
-                      backdropFilter: 'blur(10px)',
-                      WebkitBackdropFilter: 'blur(10px)',
-                      borderColor: '#ff6b6b',
-                      boxShadow: '0 0 15px rgba(255, 107, 107, 0.3)',
-                      gap: '0.8vw'
-                    }}
-                  >
-                    <div style={{ fontSize: '1.2rem' }}>🎯</div>
-                    <AnimatedText
-                      text="Arrastra y suelta una tarjeta para comenzar"
-                      className="text-white font-semibold"
-                      delay={30}
-                      initialDelay={2000}
-                      style={{ fontSize: 'clamp(0.75rem, 0.85vw, 0.9rem)' }}
-                    />
-                  </div>
-                </div>
-              </div>
+              {/* Banner limpio sin pista */}
             </div>
 
             {/* Lanyards únicamente - 100% ancho de pantalla */}
@@ -247,7 +206,7 @@ function App() {
             {/* Botón volver */}
             <button
               onClick={handleBackToMenu}
-              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             >
               <X className="w-5 h-5" />
               <span className="font-semibold">Volver al Menú</span>
@@ -274,7 +233,7 @@ function App() {
             {/* Botón volver */}
             <button
               onClick={handleBackToMenu}
-              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             >
               <X className="w-5 h-5" />
               <span className="font-semibold">Volver al Menú</span>
@@ -290,7 +249,7 @@ function App() {
             {/* Botón volver */}
             <button
               onClick={handleBackToMenu}
-              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             >
               <X className="w-5 h-5" />
               <span className="font-semibold">Volver al Menú</span>
@@ -306,7 +265,7 @@ function App() {
             {/* Botón volver */}
             <button
               onClick={handleBackToMenu}
-              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             >
               <X className="w-5 h-5" />
               <span className="font-semibold">Volver al Menú</span>
@@ -328,7 +287,7 @@ function App() {
             {/* Botón volver */}
             <button
               onClick={handleBackToMenu}
-              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#5d0008] to-[#8b0012] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+              className="flex items-center gap-2 mb-6 px-6 py-3 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
             >
               <X className="w-5 h-5" />
               <span className="font-semibold">Volver al Menú</span>

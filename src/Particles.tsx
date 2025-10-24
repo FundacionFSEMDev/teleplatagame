@@ -17,7 +17,7 @@ interface ParticlesProps {
 }
 
 const Particles: React.FC<ParticlesProps> = ({
-  particleColors = ['#5d0008'],
+  particleColors = ['#2563eb'],
   particleCount = 200,
   particleSpread = 10,
   speed = 0.1,

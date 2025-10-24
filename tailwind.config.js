@@ -9,8 +9,8 @@ export default {
     extend: {
       colors: {
         brand: {
-          primary: '#5d0008',
-          secondary: '#8b0012',
+          primary: '#2563eb',
+          secondary: '#1d4ed8',
         },
       },
       animation: {

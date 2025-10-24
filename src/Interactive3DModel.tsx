@@ -106,7 +106,7 @@ const Interactive3DModel = () => {
       // Activar paso actual con efecto de ola
       tl.to(`.step-circle-${index}`, {
         scale: 1.3,
-        backgroundColor: '#5d0008',
+        backgroundColor: '#2563eb',
         boxShadow: '0 0 25px rgba(93, 0, 8, 0.6)',
         duration: 0.4,
         ease: "back.out(1.7)"
@@ -119,7 +119,7 @@ const Interactive3DModel = () => {
       }, "<0.1")
       .to(`.step-line-${index}`, {
         scaleX: 1,
-        backgroundColor: '#5d0008',
+        backgroundColor: '#2563eb',
         duration: 2.5,
         ease: "none"
       }, "<")
@@ -127,7 +127,7 @@ const Interactive3DModel = () => {
       // Desactivar paso y pasar al siguiente
       .to(`.step-circle-${index}`, {
         scale: 1,
-        backgroundColor: '#8b0012',
+        backgroundColor: '#1d4ed8',
         boxShadow: '0 4px 10px rgba(93, 0, 8, 0.3)',
         duration: 0.2,
         ease: "power2.in"
@@ -176,7 +176,7 @@ const Interactive3DModel = () => {
         }}
       >
         <div className="relative z-10">
-          <h1 className="text-3xl font-bold text-[#5d0008] mb-2">
+          <h1 className="text-3xl font-bold text-[#2563eb] mb-2">
           ¿Cómo funciona la plataforma?
         </h1>
           <p className="text-gray-600">
@@ -207,7 +207,7 @@ const Interactive3DModel = () => {
             onClick={() => setIsPaused(!isPaused)}
             className="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
             style={{
-              background: 'linear-gradient(135deg, #5d0008 0%, #8b0012 100%)'
+              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)'
             }}
             title={isPaused ? 'Play' : 'Pause'}
           >
@@ -251,7 +251,7 @@ const Interactive3DModel = () => {
                     <div 
                       className={`step-circle-${index} relative z-10 w-12 h-12 rounded-full flex items-center justify-center font-bold text-white shadow-lg transition-all duration-300 cursor-pointer`}
                       style={{ 
-                        background: 'linear-gradient(135deg, #8b0012 0%, #b00016 100%)',
+                        background: 'linear-gradient(135deg, #1d4ed8 0%, #b00016 100%)',
                         boxShadow: '0 4px 10px rgba(93, 0, 8, 0.3)'
                       }}
                     >
@@ -259,7 +259,7 @@ const Interactive3DModel = () => {
                       <div 
                         className="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center"
                       >
-                        <Icon className="w-3.5 h-3.5 text-[#5d0008]" />
+                        <Icon className="w-3.5 h-3.5 text-[#2563eb]" />
                       </div>
                     </div>
                   </div>
@@ -291,9 +291,9 @@ const Interactive3DModel = () => {
                         background: 'linear-gradient(135deg, rgba(93, 0, 8, 0.1) 0%, rgba(139, 0, 18, 0.1) 100%)'
                       }}
                     >
-                      <Icon className="w-4 h-4 text-[#5d0008]" />
+                      <Icon className="w-4 h-4 text-[#2563eb]" />
                     </div>
-                    <span className="text-xs font-mono font-bold text-[#5d0008]">
+                    <span className="text-xs font-mono font-bold text-[#2563eb]">
                       {step.number}
                     </span>
                   </div>
@@ -312,7 +312,7 @@ const Interactive3DModel = () => {
           <div className="mt-4 pt-3 border-t border-gray-100/50">
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-xs font-semibold text-gray-400">Progreso</span>
-              <span className="text-xs font-mono font-bold text-[#5d0008]">
+              <span className="text-xs font-mono font-bold text-[#2563eb]">
                 {Math.round(currentProgress)}%
               </span>
             </div>
@@ -321,7 +321,7 @@ const Interactive3DModel = () => {
                 className="h-full rounded-full transition-all duration-300"
                         style={{ 
                   width: `${currentProgress}%`,
-                  background: 'linear-gradient(90deg, #5d0008 0%, #8b0012 100%)',
+                  background: 'linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%)',
                   boxShadow: '0 0 8px rgba(93, 0, 8, 0.4)'
                         }}
                       />
@@ -348,7 +348,7 @@ const Interactive3DModel = () => {
                   border: '1px solid rgba(93, 0, 8, 0.1)'
                 }}
               >
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-[#5d0008] to-[#8b0012] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                   <Icon className="w-5 h-5 text-white" />
                   </div>
                 <div className="flex-1 min-w-0">
@@ -369,7 +369,7 @@ const Interactive3DModel = () => {
       <div 
         className="rounded-2xl p-6 shadow-xl"
         style={{
-          background: 'linear-gradient(135deg, #5d0008 0%, #8b0012 100%)'
+          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)'
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
@@ -414,7 +414,7 @@ const Interactive3DModel = () => {
                   />
                 </div>
                 <div className="text-center">
-                  <div className="text-xs font-semibold text-gray-500 mt-1 group-hover:text-[#5d0008] transition-colors">
+                  <div className="text-xs font-semibold text-gray-500 mt-1 group-hover:text-[#2563eb] transition-colors">
                     PDF
                   </div>
                 </div>
