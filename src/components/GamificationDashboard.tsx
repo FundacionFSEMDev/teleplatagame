@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 import 'nes.css/css/nes.min.css';
+import Badges from './Badges';
+import staryuIcon from './staryu.png';
+import cookIcon from './cook.png';
+import allSeeingEyeIcon from './all-seeing-eye.png';
+import chestIcon from './chest.png';
 
 interface GamificationDashboardProps {
   userData: any;
@@ -30,6 +35,8 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
   const [levelUpTo, setLevelUpTo] = useState(2);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hideProgressBar, setHideProgressBar] = useState(false);
+  const [showBadgesPage, setShowBadgesPage] = useState(false);
+  const [unlockedBadgesFromDB, setUnlockedBadgesFromDB] = useState<any[]>([]);
 
   const MOODLE_URL = 'https://formacion.fundacionsanezequiel.org';
   const MOODLE_TOKEN = '81ca76859196a70d00b4683c7270e76c';
@@ -687,16 +694,58 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
     }
   }, [animatedProgress, levelUpTo, currentLevel, levelUpFrom, isLoading, showLevelUp, totalPoints]);
 
+  // Cargar badges desbloqueados desde la base de datos
+  useEffect(() => {
+    const loadUnlockedBadges = async () => {
+      if (!userData?.id) return;
+
+      try {
+        // Obtener badges del usuario
+        const userBadgesRes = await fetch(
+          `${SUPABASE_URL}/rest/v1/user_badges?user_id=eq.${userData.id}`,
+          {
+            headers: {
+              'apikey': SUPABASE_SERVICE_KEY,
+              'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+            }
+          }
+        );
+        const userBadges = await userBadgesRes.json();
+
+        // Obtener información completa de esos badges
+        if (userBadges.length > 0) {
+          const badgeIds = userBadges.map((ub: any) => ub.badge_id).join(',');
+          const badgesRes = await fetch(
+            `${SUPABASE_URL}/rest/v1/badges?id=in.(${badgeIds})`,
+            {
+              headers: {
+                'apikey': SUPABASE_SERVICE_KEY,
+                'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
+              }
+            }
+          );
+          const badgesData = await badgesRes.json();
+          setUnlockedBadgesFromDB(badgesData);
+        }
+      } catch (error) {
+        console.error('Error cargando badges:', error);
+      }
+    };
+
+    loadUnlockedBadges();
+  }, [userData?.id, totalPoints]); // Recargar cuando cambien los puntos
+
   // Calcular badges desbloqueados
   const badges = [
-    { id: 1, name: '🎯 Primer Paso', unlocked: totalPoints >= 25 },
-    { id: 2, name: '⚡ A Mitad', unlocked: totalPoints >= 50 },
-    { id: 3, name: '🏆 Completado', unlocked: totalPoints >= 100 },
-    { id: 4, name: '📚 Dedicado', unlocked: courses.filter(c => c.progress > 0).length >= 3 },
-    { id: 5, name: '⭐ Experto', unlocked: displayLevel >= 5 },
+    { id: 1, code: 'START_ADVENTURE', name: '🎯 Primer Paso', unlocked: totalPoints >= 25 },
+    { id: 2, code: 'HALFWAY', name: '⚡ A Mitad', unlocked: totalPoints >= 50 },
+    { id: 3, code: 'COMPLETED', name: '🏆 Completado', unlocked: totalPoints >= 100 },
+    { id: 4, code: 'DEDICATED', name: '📚 Dedicado', unlocked: courses.filter(c => c.progress > 0).length >= 3 },
+    { id: 5, code: 'EXPERT', name: '⭐ Experto', unlocked: displayLevel >= 5 },
   ];
 
-  const unlockedBadges = badges.filter(b => b.unlocked);
+  // Usar badges desde la base de datos si están disponibles, sino los manuales
+  const unlockedBadges = unlockedBadgesFromDB.length > 0 ? unlockedBadgesFromDB : badges.filter(b => b.unlocked);
 
   if (isLoading) {
     return (
@@ -710,6 +759,11 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         LOADING...
       </div>
     );
+  }
+
+  // Si showBadgesPage es true, renderizar la vista de badges
+  if (showBadgesPage) {
+    return <Badges userData={userData} onBack={() => setShowBadgesPage(false)} />;
   }
 
   return (
@@ -1073,44 +1127,182 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
             boxShadow: '3px 3px 0px rgba(0,0,0,0.2)'
           }}>
             <div style={{ fontSize: '10px', marginBottom: '12px', color: '#333' }}>
-              LOGROS [{unlockedBadges.length}/{badges.length}]
+              LOGROS [{unlockedBadges.length}]
             </div>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '8px'
+              gridTemplateColumns: unlockedBadges.length === 0 ? '1fr' : 'repeat(5, 1fr)',
+              gap: '8px',
+              minHeight: '60px'
             }}>
-              {badges.map(badge => (
+              {unlockedBadges.length === 0 ? (
+                <div style={{
+                  gridColumn: '1 / -1',
+                  textAlign: 'center',
+                  color: '#999',
+                  fontSize: '8px',
+                  padding: '20px'
+                }}>
+                  Aún no tienes logros desbloqueados
+                </div>
+              ) : (
+                unlockedBadges.map((badge: any) => (
                 <div
                   key={badge.id}
                   style={{
                     aspectRatio: '1',
-                    backgroundColor: badge.unlocked ? '#2563eb' : '#e0e0e0',
+                    backgroundColor: '#2563eb',
                     border: '3px solid #333',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '24px',
-                    filter: badge.unlocked ? 'none' : 'grayscale(100%)',
-                    opacity: badge.unlocked ? 1 : 0.3,
                     transition: 'all 0.2s ease',
-                    cursor: badge.unlocked ? 'pointer' : 'default',
-                    boxShadow: badge.unlocked ? '2px 2px 0px rgba(0,0,0,0.3)' : 'none'
+                    cursor: 'pointer',
+                    boxShadow: '2px 2px 0px rgba(0,0,0,0.3)',
+                    position: 'relative',
+                    overflow: 'hidden'
                   }}
                   title={badge.name}
                   onMouseEnter={(e) => {
-                    if (badge.unlocked) {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }
+                    e.currentTarget.style.transform = 'scale(1.1)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
-                  {badge.name.split(' ')[0]}
+                  {badge.code === 'START_ADVENTURE' ? (
+                    <img 
+                      src={staryuIcon} 
+                      alt={badge.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                      }}
+                    />
+                  ) : badge.code === 'BACTERIA_HUNTER' ? (
+                    <img 
+                      src={cookIcon} 
+                      alt={badge.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                      }}
+                    />
+                  ) : badge.code === 'KNOW_IT_ALL' ? (
+                    <img 
+                      src={allSeeingEyeIcon} 
+                      alt={badge.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                      }}
+                    />
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '100%',
+                      height: '100%',
+                      fontSize: '24px'
+                    }}>
+                      {badge.icon || badge.name.split(' ')[0]}
+                    </div>
+                  )}
                 </div>
-              ))}
+                ))
+              )}
             </div>
+            
+            {/* Botón para ver todos los logros */}
+            <button
+              onClick={() => setShowBadgesPage(true)}
+              style={{
+                marginTop: '15px',
+                width: '100%',
+                padding: '10px',
+                fontSize: '9px',
+                fontWeight: 'bold',
+                backgroundColor: '#2563eb',
+                color: 'white',
+                border: '3px solid #333',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: '2px 2px 0px rgba(0,0,0,0.3)',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#1d4ed8';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px rgba(0,0,0,0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#2563eb';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '2px 2px 0px rgba(0,0,0,0.3)';
+              }}
+            >
+              Ver todos los logros
+            </button>
+            
+            {/* Botón Inventario (provisional) */}
+            <button
+              onClick={() => alert('Sistema de inventario en desarrollo... 🎒')}
+              style={{
+                marginTop: '10px',
+                width: '100%',
+                padding: '10px',
+                fontSize: '9px',
+                fontWeight: 'bold',
+                backgroundColor: '#1e40af',
+                color: 'white',
+                border: '3px solid #333',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: '2px 2px 0px rgba(0,0,0,0.3)',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#1e3a8a';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px rgba(0,0,0,0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#1e40af';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '2px 2px 0px rgba(0,0,0,0.3)';
+              }}
+            >
+              <img 
+                src={chestIcon} 
+                alt="Inventario"
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  objectFit: 'contain'
+                }}
+              />
+              Inventario
+            </button>
           </div>
         </div>
 
