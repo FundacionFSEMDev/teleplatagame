@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import 'nes.css/css/nes.min.css';
 import Badges from './Badges';
+import Inventory from './Inventory';
 import staryuIcon from './staryu.png';
 import cookIcon from './cook.png';
 import allSeeingEyeIcon from './all-seeing-eye.png';
@@ -37,6 +38,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
   const [hideProgressBar, setHideProgressBar] = useState(false);
   const [showBadgesPage, setShowBadgesPage] = useState(false);
   const [unlockedBadgesFromDB, setUnlockedBadgesFromDB] = useState<any[]>([]);
+  const [showInventoryPage, setShowInventoryPage] = useState(false);
 
   const MOODLE_URL = 'https://formacion.fundacionsanezequiel.org';
   const MOODLE_TOKEN = '81ca76859196a70d00b4683c7270e76c';
@@ -766,6 +768,11 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
     return <Badges userData={userData} onBack={() => setShowBadgesPage(false)} />;
   }
 
+  // Si showInventoryPage es true, renderizar la vista de inventario
+  if (showInventoryPage) {
+    return <Inventory userData={userData} onBack={() => setShowInventoryPage(false)} />;
+  }
+
   return (
     <div style={{
       fontFamily: '"Press Start 2P", cursive',
@@ -1259,9 +1266,9 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
               Ver todos los logros
             </button>
             
-            {/* Botón Inventario (provisional) */}
+            {/* Botón Inventario */}
             <button
-              onClick={() => alert('Sistema de inventario en desarrollo... 🎒')}
+              onClick={() => setShowInventoryPage(true)}
               style={{
                 marginTop: '10px',
                 width: '100%',
