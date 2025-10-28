@@ -26,6 +26,7 @@ interface UserItem {
     description: string;
     icon_url: string;
     type: string;
+    slot_type?: string; // head, chest, gloves, pants, boots, weapon, ring
     rarity: string;
     attack: number;
     defense: number;
@@ -99,6 +100,37 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [hoveredItem]);
 
+  // Utilidades de icono y slot
+  const getItemIcon = (code: string) => {
+    switch (code) {
+      case 'STUDENT_HAT':
+        return '🧢';
+      case 'STUDENT_CHEST':
+        return '👕';
+      case 'STUDENT_GLOVES':
+        return '🧤';
+      case 'STUDENT_PANTS':
+        return '👖';
+      case 'STUDENT_BOOTS':
+        return '👢';
+      case 'STUDENT_RING':
+        return '💍';
+      case 'USED_BOOK':
+        return '📚';
+      default:
+        return '❓';
+    }
+  };
+
+  const slotCodeToSlotType = (slotCode?: string): string | undefined =>
+    slotCode === 'STUDENT_HAT' ? 'head' :
+    slotCode === 'STUDENT_CHEST' ? 'chest' :
+    slotCode === 'STUDENT_GLOVES' ? 'gloves' :
+    slotCode === 'STUDENT_PANTS' ? 'pants' :
+    slotCode === 'STUDENT_BOOTS' ? 'boots' :
+    slotCode === 'STUDENT_RING' ? 'ring' :
+    slotCode === 'USED_BOOK' ? 'weapon' : undefined;
+
 
   const loadUserItems = async () => {
     try {
@@ -141,6 +173,23 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
       }
     } catch (error) {
       console.error('❌ Error cargando stats:', error);
+    }
+  };
+
+  const updateUserItemEquippedStatus = async (itemId: number, equipped: boolean) => {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/user_items?id=eq.${itemId}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ equipped })
+      });
+      await loadUserItems();
+    } catch (error) {
+      console.error('❌ Error actualizando estado de item:', error);
     }
   };
 
@@ -193,9 +242,48 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '0 0',
         position: 'relative',
-        cursor: 'pointer',
+        cursor: equippedItem ? 'pointer' : 'default',
         transition: 'transform 0.2s ease',
         flexShrink: 0
+      }}
+      draggable={!!equippedItem}
+      onDragStart={(e) => {
+        if (equippedItem) {
+          e.dataTransfer.setData('application/json', JSON.stringify(equippedItem));
+          e.dataTransfer.effectAllowed = 'move';
+        }
+      }}
+      onDoubleClick={async () => {
+        try {
+          if (equippedItem) {
+            await updateUserItemEquippedStatus(equippedItem.id, false);
+          }
+        } catch (err) {
+          console.error('Double click unequip error:', err);
+        }
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDrop={async (e) => {
+        e.preventDefault();
+        try {
+          const data = e.dataTransfer.getData('application/json');
+          if (!data) return;
+          const dragged: UserItem = JSON.parse(data);
+
+          // Validación por slot_type
+          const targetSlot: string | undefined = slotCodeToSlotType(slotCode);
+
+          if (!targetSlot || dragged.items.slot_type !== targetSlot) {
+            return;
+          }
+
+          // Equipar el item
+          await updateUserItemEquippedStatus(dragged.id, true);
+        } catch (err) {
+          console.error('Drop error:', err);
+        }
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'scale(1.05)';
@@ -210,13 +298,12 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-                         fontSize: '18px'
+            fontSize: '42px',
+            pointerEvents: 'none',
+            opacity: 1,
+            filter: 'none'
            }}>
-             {equippedItem.items.icon_url ? (
-               <span>{equippedItem.items.icon_url}</span>
-             ) : (
-               <span>{equippedItem.items.name.split(' ')[0]}</span>
-             )}
+             {getItemIcon(equippedItem.items.code)}
            </div>
          )}
        </div>
@@ -475,6 +562,50 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                                 transition: 'transform 0.2s ease',
                                 flexShrink: 0
                               }}
+                              draggable={!!item}
+                              onDragStart={(e) => {
+                                if (item) {
+                                  e.dataTransfer.setData('application/json', JSON.stringify(item));
+                                  e.dataTransfer.effectAllowed = 'move';
+                                }
+                              }}
+                              onDoubleClick={async () => {
+                                try {
+                                  if (item) {
+                                    // Equipar por doble click si hay hueco compatible en equipo
+                                    await updateUserItemEquippedStatus(item.id, true);
+                                  }
+                                } catch (err) {
+                                  console.error('Double click equip error:', err);
+                                }
+                              }}
+                              onDragOver={(e) => {
+                                e.preventDefault();
+                              }}
+                              onDrop={async (e) => {
+                                e.preventDefault();
+                                try {
+                                  const data = e.dataTransfer.getData('application/json');
+                                  if (!data) return;
+                                  const dragged: UserItem = JSON.parse(data);
+
+                                  // Si el item ya está equipado (arrastrado desde slot de equipo), desequipar
+                                  if (dragged.equipped) {
+                                    await fetch(`${SUPABASE_URL}/rest/v1/user_items?id=eq.${dragged.id}`, {
+                                      method: 'PATCH',
+                                      headers: {
+                                        'apikey': SUPABASE_SERVICE_KEY,
+                                        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+                                        'Content-Type': 'application/json'
+                                      },
+                                      body: JSON.stringify({ equipped: false })
+                                    });
+                                    await loadUserItems();
+                                  }
+                                } catch (err) {
+                                  console.error('Drop error:', err);
+                                }
+                              }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'scale(1.05)';
                                 if (item) {
@@ -496,7 +627,7 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                                   top: '50%',
                                   left: '50%',
                                   transform: 'translate(-50%, -50%)',
-                                  fontSize: '48px',
+                                  fontSize: '42px',
                                   pointerEvents: 'none',
                                   textShadow: '2px 2px 0px rgba(0,0,0,0.3)'
                                 }}>
