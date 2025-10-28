@@ -50,6 +50,34 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
   const [userStats, setUserStats] = useState<UserStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [hoveredItem, setHoveredItem] = useState<UserItem | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  // Calcular posición del modal evitando salirse de la pantalla
+  const getTooltipPosition = () => {
+    const tooltipWidth = 320; // maxWidth del tooltip
+    const tooltipHeight = 200; // altura estimada
+    const padding = 10; // padding desde los bordes
+    
+    // Por defecto, poner a la izquierda del cursor
+    let x = mousePos.x - tooltipWidth - 30;
+    let y = mousePos.y + 20;
+    
+    // Solo si se sale por la izquierda, poner a la derecha
+    if (x < padding) {
+      x = mousePos.x + 30;
+    }
+    
+    // Si se sale por abajo, poner arriba del cursor
+    if (y + tooltipHeight > window.innerHeight - padding) {
+      y = mousePos.y - tooltipHeight - 20;
+    }
+    
+    // Asegurar que no se salga por arriba
+    y = Math.max(padding, y);
+    
+    return { x, y };
+  };
 
   const SUPABASE_URL = 'https://zwmmrhiqbdafkvbxzqig.supabase.co';
   const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3bW1yaGlxYmRhZmt2Ynh6cWlnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MTA5MzU5NywiZXhwIjoyMDc2NjY5NTk3fQ.poF7hPheoGYmdG3nR1uztIZToMjT03tmCnoX50Uk9mg';
@@ -58,6 +86,19 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
     loadUserItems();
     loadUserStats();
   }, []);
+
+  // Escuchar movimientos del mouse globalmente
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (hoveredItem) {
+        setMousePos({ x: e.clientX, y: e.clientY });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [hoveredItem]);
+
 
   const loadUserItems = async () => {
     try {
@@ -393,6 +434,32 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                       >
                         {Array.from({ length: 30 }, (_, slotIndex) => {
                           const globalIndex = pageIndex * 30 + slotIndex;
+                          // Obtener el item correspondiente a este slot (solo items no equipados)
+                          const unequippedItems = userItems.filter(i => !i.equipped);
+                          const item = unequippedItems[globalIndex];
+                          
+                          // Función para obtener el icono placeholder según el código del item
+                          const getItemIcon = (itemCode: string) => {
+                            switch (itemCode) {
+                              case 'STUDENT_HAT':
+                                return '🧢';
+                              case 'STUDENT_CHEST':
+                                return '👕';
+                              case 'STUDENT_GLOVES':
+                                return '🧤';
+                              case 'STUDENT_PANTS':
+                                return '👖';
+                              case 'STUDENT_BOOTS':
+                                return '👢';
+                              case 'STUDENT_RING':
+                                return '💍';
+                              case 'USED_BOOK':
+                                return '📚';
+                              default:
+                                return null;
+                            }
+                          };
+                          
                           return (
                             <div
                               key={globalIndex}
@@ -404,18 +471,38 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                                 backgroundRepeat: 'no-repeat',
                                 backgroundPosition: '0 0',
                                 position: 'relative',
-                                cursor: 'pointer',
+                                cursor: item ? 'pointer' : 'default',
                                 transition: 'transform 0.2s ease',
                                 flexShrink: 0
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'scale(1.05)';
+                                if (item) {
+                                  setHoveredItem(item);
+                                  // Inicializar posición del tooltip
+                                  setMousePos({ x: e.clientX, y: e.clientY });
+                                }
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = 'scale(1)';
+                                setHoveredItem(null);
+                                setMousePos({ x: 0, y: 0 });
                               }}
                             >
-                              {/* Aquí irá el icono del item si tiene */}
+                              {/* Mostrar el icono del item si existe */}
+                              {item && (
+                                <div style={{
+                                  position: 'absolute',
+                                  top: '50%',
+                                  left: '50%',
+                                  transform: 'translate(-50%, -50%)',
+                                  fontSize: '48px',
+                                  pointerEvents: 'none',
+                                  textShadow: '2px 2px 0px rgba(0,0,0,0.3)'
+                                }}>
+                                  {getItemIcon(item.items.code)}
+                                </div>
+                              )}
                             </div>
                           );
                         })}
@@ -476,6 +563,104 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
         )}
         </div>
       </div>
+
+      {/* Modal de item */}
+      {hoveredItem && (() => {
+        const position = getTooltipPosition();
+        return (
+          <div
+            style={{
+              position: 'fixed',
+              left: `${position.x}px`,
+              top: `${position.y}px`,
+              pointerEvents: 'none',
+              zIndex: 10000,
+              backgroundColor: '#0a0a0a',
+              border: '2px solid #4a9eff',
+              borderRadius: '6px',
+              padding: '16px 20px',
+              minWidth: '280px',
+              maxWidth: '350px',
+              fontFamily: 'monospace',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.8), 0 0 0 1px rgba(74, 158, 255, 0.3)',
+            }}
+          >
+          {/* Nombre del item */}
+          <div style={{
+            fontSize: '15px',
+            fontWeight: 'bold',
+            color: '#4a9eff',
+            marginBottom: '10px',
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            textShadow: '0 0 10px rgba(74, 158, 255, 0.5)'
+          }}>
+            {hoveredItem.items.name}
+          </div>
+
+          {/* Descripción */}
+          <div style={{
+            fontSize: '12px',
+            color: '#c0c0c0',
+            marginBottom: '12px',
+            lineHeight: '1.5'
+          }}>
+            {hoveredItem.items.description}
+          </div>
+
+          {/* Stats */}
+          {(hoveredItem.items.attack > 0 || 
+            hoveredItem.items.defense > 0 || 
+            hoveredItem.items.hp > 0 || 
+            hoveredItem.items.speed > 0 || 
+            hoveredItem.items.wisdom > 0 || 
+            hoveredItem.items.crit_chance > 0) && (
+            <div style={{ 
+              borderTop: '1px solid #333', 
+              paddingTop: '10px',
+              marginTop: '10px'
+            }}>
+              {hoveredItem.items.attack > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#fff' }}>
+                  <span style={{ color: '#ff6b6b' }}>ATK:</span>
+                  <span style={{ fontWeight: 'bold', color: '#4ecdc4' }}>+{hoveredItem.items.attack}</span>
+                </div>
+              )}
+              {hoveredItem.items.defense > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#fff' }}>
+                  <span style={{ color: '#4ecdc4' }}>DEF:</span>
+                  <span style={{ fontWeight: 'bold', color: '#45b7d1' }}>+{hoveredItem.items.defense}</span>
+                </div>
+              )}
+              {hoveredItem.items.hp > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#fff' }}>
+                  <span style={{ color: '#ff6b6b' }}>HP:</span>
+                  <span style={{ fontWeight: 'bold', color: '#ff6b6b' }}>+{hoveredItem.items.hp}</span>
+                </div>
+              )}
+              {hoveredItem.items.speed > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#fff' }}>
+                  <span style={{ color: '#feca57' }}>SPD:</span>
+                  <span style={{ fontWeight: 'bold', color: '#feca57' }}>+{hoveredItem.items.speed}</span>
+                </div>
+              )}
+              {hoveredItem.items.wisdom > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#fff' }}>
+                  <span style={{ color: '#a29bfe' }}>WIS:</span>
+                  <span style={{ fontWeight: 'bold', color: '#a29bfe' }}>+{hoveredItem.items.wisdom}</span>
+                </div>
+              )}
+              {hoveredItem.items.crit_chance > 0 && (
+                <div style={{ fontSize: '11px', display: 'flex', justifyContent: 'space-between', color: '#fff' }}>
+                  <span style={{ color: '#fd79a8' }}>CRT:</span>
+                  <span style={{ fontWeight: 'bold', color: '#fd79a8' }}>+{hoveredItem.items.crit_chance}%</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        );
+      })()}
     </>
   );
 }
