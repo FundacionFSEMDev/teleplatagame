@@ -9,6 +9,16 @@ import slotBoots from './slot_boots.png';
 import slotRing from './slot_ring.png';
 import inventorySlot from './inventory_slot.png';
 
+// Importar assets de items
+import studentHat from './student_hat.png';
+import studentChest from './student_chest.png';
+import studentGloves from './student_gloves.png';
+import studentPants from './student_pants.png';
+import studentBoots from './student_boots.png';
+import studentRing from './student_ring.png';
+import studentBook from './student_book.png';
+import shyningCape from './shyning_cape.png';
+
 interface InventoryProps {
   userData: any;
   onBack: () => void;
@@ -101,25 +111,51 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
   }, [hoveredItem]);
 
   // Utilidades de icono y slot
-  const getItemIcon = (code: string) => {
+  const getItemIcon = (code: string): string | undefined => {
     switch (code) {
       case 'STUDENT_HAT':
-        return '🧢';
+        return studentHat;
       case 'STUDENT_CHEST':
-        return '👕';
+        return studentChest;
       case 'STUDENT_GLOVES':
-        return '🧤';
+        return studentGloves;
       case 'STUDENT_PANTS':
-        return '👖';
+        return studentPants;
       case 'STUDENT_BOOTS':
-        return '👢';
+        return studentBoots;
       case 'STUDENT_RING':
-        return '💍';
+        return studentRing;
       case 'USED_BOOK':
-        return '📚';
+        return studentBook;
+      case 'SHYNING_CAPE':
+        return shyningCape;
       default:
-        return '❓';
+        return undefined;
     }
+  };
+
+  // Obtener color del nombre según rareza
+  const getRarityNameColor = (rarity: string): string => {
+    switch (rarity) {
+      case 'common':
+        return '#b0b0b0'; // Gris legible
+      case 'rare':
+        return '#4a9eff'; // Azul intenso (actual)
+      case 'epic':
+        return '#9932cc'; // Morado intenso
+      case 'legendary':
+        return '#ff8c00'; // Naranja potente
+      default:
+        return '#4a9eff'; // Azul por defecto
+    }
+  };
+
+  // Obtener text-shadow según rareza (solo legendary tiene brillo en las letras)
+  const getRarityTextShadow = (rarity: string): string => {
+    if (rarity === 'legendary') {
+      return '0 0 10px rgba(255, 140, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.5)';
+    }
+    return 'none';
   };
 
   const slotCodeToSlotType = (slotCode?: string): string | undefined =>
@@ -193,10 +229,15 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
     }
   };
 
-  const getEquippedItem = (code?: string) => {
-    if (code) {
-      // Buscar por código específico (para slots específicos)
-      return userItems.find(item => item.equipped && item.items.code === code);
+  const getEquippedItem = (slotCode?: string) => {
+    if (slotCode) {
+      // Convertir slotCode a slot_type y buscar item equipado en ese slot
+      const targetSlotType = slotCodeToSlotType(slotCode);
+      if (!targetSlotType) return undefined;
+      
+      return userItems.find(item => 
+        item.equipped && item.items.slot_type === targetSlotType
+      );
     } else {
       // Buscar el primer item equipado (por defecto)
       return userItems.find(item => item.equipped);
@@ -292,20 +333,24 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
         e.currentTarget.style.transform = 'scale(1)';
       }}
       >
-        {equippedItem && (
-          <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontSize: '42px',
-            pointerEvents: 'none',
-            opacity: 1,
-            filter: 'none'
-           }}>
-             {getItemIcon(equippedItem.items.code)}
-           </div>
-         )}
+        {equippedItem && getItemIcon(equippedItem.items.code) && (
+          <img
+            src={getItemIcon(equippedItem.items.code)}
+            alt={equippedItem.items.name}
+            className={`rarity-${equippedItem.items.rarity}`}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '80px',
+              height: '80px',
+              pointerEvents: 'none',
+              imageRendering: 'pixelated',
+              opacity: 1
+            }}
+          />
+        )}
        </div>
      );
    };
@@ -316,6 +361,47 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         .inventory-slider {
           transition: transform 0.4s ease-in-out;
+        }
+        
+        /* Animaciones de rareza - Glow circular en la imagen del item */
+        .rarity-common img,
+        .rarity-common {
+          animation: rarity-glow-common 2s ease-in-out infinite;
+        }
+        
+        .rarity-rare img,
+        .rarity-rare {
+          animation: rarity-glow-rare 1.5s ease-in-out infinite;
+        }
+        
+        .rarity-epic img,
+        .rarity-epic {
+          animation: rarity-glow-epic 1.2s ease-in-out infinite;
+        }
+        
+        .rarity-legendary img,
+        .rarity-legendary {
+          animation: rarity-glow-legendary 1s ease-in-out infinite;
+        }
+        
+        @keyframes rarity-glow-common {
+          0%, 100% { filter: drop-shadow(0 0 6px rgba(192, 192, 192, 0.6)); }
+          50% { filter: drop-shadow(0 0 7px rgba(192, 192, 192, 0.7)); }
+        }
+        
+        @keyframes rarity-glow-rare {
+          0%, 100% { filter: drop-shadow(0 0 7px rgba(135, 206, 235, 0.7)); }
+          50% { filter: drop-shadow(0 0 9.5px rgba(135, 206, 235, 0.8)); }
+        }
+        
+        @keyframes rarity-glow-epic {
+          0%, 100% { filter: drop-shadow(0 0 8px rgba(153, 50, 204, 0.8)); }
+          50% { filter: drop-shadow(0 0 11px rgba(153, 50, 204, 0.85)); }
+        }
+        
+        @keyframes rarity-glow-legendary {
+          0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.9)); }
+          50% { filter: drop-shadow(0 0 13px rgba(255, 140, 0, 0.925)); }
         }
       `}</style>
       <div style={{
@@ -525,31 +611,10 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                           const unequippedItems = userItems.filter(i => !i.equipped);
                           const item = unequippedItems[globalIndex];
                           
-                          // Función para obtener el icono placeholder según el código del item
-                          const getItemIcon = (itemCode: string) => {
-                            switch (itemCode) {
-                              case 'STUDENT_HAT':
-                                return '🧢';
-                              case 'STUDENT_CHEST':
-                                return '👕';
-                              case 'STUDENT_GLOVES':
-                                return '🧤';
-                              case 'STUDENT_PANTS':
-                                return '👖';
-                              case 'STUDENT_BOOTS':
-                                return '👢';
-                              case 'STUDENT_RING':
-                                return '💍';
-                              case 'USED_BOOK':
-                                return '📚';
-                              default:
-                                return null;
-                            }
-                          };
-                          
                           return (
                             <div
                               key={globalIndex}
+                              className={item ? `rarity-${item.items.rarity}` : ''}
                               style={{
                                 width: '120px',
                                 height: '120px',
@@ -560,7 +625,8 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                                 position: 'relative',
                                 cursor: item ? 'pointer' : 'default',
                                 transition: 'transform 0.2s ease',
-                                flexShrink: 0
+                                flexShrink: 0,
+                                overflow: 'hidden'
                               }}
                               draggable={!!item}
                               onDragStart={(e) => {
@@ -621,18 +687,21 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
                               }}
                             >
                               {/* Mostrar el icono del item si existe */}
-                              {item && (
-                                <div style={{
-                                  position: 'absolute',
-                                  top: '50%',
-                                  left: '50%',
-                                  transform: 'translate(-50%, -50%)',
-                                  fontSize: '42px',
-                                  pointerEvents: 'none',
-                                  textShadow: '2px 2px 0px rgba(0,0,0,0.3)'
-                                }}>
-                                  {getItemIcon(item.items.code)}
-                                </div>
+                              {item && getItemIcon(item.items.code) && (
+                                <img
+                                  src={getItemIcon(item.items.code)}
+                                  alt={item.items.name}
+                                  style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: '80px',
+                                    height: '80px',
+                                    pointerEvents: 'none',
+                                    imageRendering: 'pixelated'
+                                  }}
+                                />
                               )}
                             </div>
                           );
@@ -720,13 +789,34 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
           <div style={{
             fontSize: '15px',
             fontWeight: 'bold',
-            color: '#4a9eff',
-            marginBottom: '10px',
+            color: getRarityNameColor(hoveredItem.items.rarity),
+            marginBottom: '6px',
             textTransform: 'uppercase',
             letterSpacing: '1px',
-            textShadow: '0 0 10px rgba(74, 158, 255, 0.5)'
+            textShadow: getRarityTextShadow(hoveredItem.items.rarity)
           }}>
             {hoveredItem.items.name}
+          </div>
+
+          {/* Rareza */}
+          <div style={{
+            fontSize: '11px',
+            fontStyle: 'italic',
+            color: '#888',
+            marginBottom: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}>
+            <span style={{ color: '#888' }}>*Rareza:</span>
+            <span style={{ 
+              color: getRarityNameColor(hoveredItem.items.rarity),
+              fontWeight: 'bold',
+              textTransform: 'capitalize'
+            }}>
+              "{hoveredItem.items.rarity}"
+            </span>
+            <span style={{ color: '#888' }}>*</span>
           </div>
 
           {/* Descripción */}
