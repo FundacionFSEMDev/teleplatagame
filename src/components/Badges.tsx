@@ -26,8 +26,10 @@ export default function Badges({ userData, onBack }: BadgesProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
 
-  const SUPABASE_URL = 'https://zwmmrhiqbdafkvbxzqig.supabase.co';
-  const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3bW1yaGlxYmRhZmt2Ynh6cWlnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MTA5MzU5NywiZXhwIjoyMDc2NjY5NTk3fQ.poF7hPheoGYmdG3nR1uztIZToMjT03tmCnoX50Uk9mg';
+  // URLs de funciones serverless
+  const API_BASE = import.meta.env.VITE_NETLIFY_SITE_URL 
+    ? `${import.meta.env.VITE_NETLIFY_SITE_URL}/.netlify/functions` 
+    : '/.netlify/functions';
 
   useEffect(() => {
     loadBadges();
@@ -37,36 +39,16 @@ export default function Badges({ userData, onBack }: BadgesProps) {
     try {
       setIsLoading(true);
 
-      // 1. Obtener todos los badges disponibles
+      // Obtener todos los badges con status unlocked via función serverless
       const badgesRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/badges?select=*&order=id.asc`,
-        {
-          headers: {
-            'apikey': SUPABASE_SERVICE_KEY,
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-          }
-        }
+        `${API_BASE}/getUserBadges?userId=${userData.id}`
       );
-      const allBadges = await badgesRes.json();
 
-      // 2. Obtener badges desbloqueados del usuario
-      const userBadgesRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/user_badges?user_id=eq.${userData.id}&select=badge_id`,
-        {
-          headers: {
-            'apikey': SUPABASE_SERVICE_KEY,
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-          }
-        }
-      );
-      const userBadges = await userBadgesRes.json();
-      const unlockedBadgeIds = new Set(userBadges.map((ub: any) => ub.badge_id));
+      if (!badgesRes.ok) {
+        throw new Error('Error cargando badges');
+      }
 
-      // 3. Marcar badges como desbloqueados o bloqueados
-      const badgesWithStatus = allBadges.map((badge: any) => ({
-        ...badge,
-        unlocked: unlockedBadgeIds.has(badge.id)
-      }));
+      const badgesWithStatus = await badgesRes.json();
 
       setBadges(badgesWithStatus);
       console.log('✅ Badges cargados:', badgesWithStatus.length);

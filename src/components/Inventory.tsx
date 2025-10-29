@@ -90,8 +90,10 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
     return { x, y };
   };
 
-  const SUPABASE_URL = 'https://zwmmrhiqbdafkvbxzqig.supabase.co';
-  const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3bW1yaGlxYmRhZmt2Ynh6cWlnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MTA5MzU5NywiZXhwIjoyMDc2NjY5NTk3fQ.poF7hPheoGYmdG3nR1uztIZToMjT03tmCnoX50Uk9mg';
+  // URLs de funciones serverless
+  const API_BASE = import.meta.env.VITE_NETLIFY_SITE_URL 
+    ? `${import.meta.env.VITE_NETLIFY_SITE_URL}/.netlify/functions` 
+    : '/.netlify/functions';
 
   useEffect(() => {
     loadUserItems();
@@ -172,16 +174,15 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
     try {
       setIsLoading(true);
 
-      // Cargar items del usuario con la información completa de items
+      // Cargar items del usuario via función serverless
       const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/user_items?user_id=eq.${userData.id}&select=*,items(*)&order=equipped.desc`,
-        {
-          headers: {
-            'apikey': SUPABASE_SERVICE_KEY,
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-          }
-        }
+        `${API_BASE}/getUserItems?userId=${userData.id}`
       );
+      
+      if (!response.ok) {
+        throw new Error('Error cargando items');
+      }
+      
       const items = await response.json();
       setUserItems(items);
       console.log('✅ Items cargados:', items.length);
@@ -195,17 +196,16 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
   const loadUserStats = async () => {
     try {
       const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/user_stats?user_id=eq.${userData.id}`,
-        {
-          headers: {
-            'apikey': SUPABASE_SERVICE_KEY,
-            'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`
-          }
-        }
+        `${API_BASE}/getUserStats?userId=${userData.id}`
       );
+      
+      if (!response.ok) {
+        throw new Error('Error cargando stats');
+      }
+      
       const stats = await response.json();
-      if (stats.length > 0) {
-        setUserStats(stats[0]);
+      if (stats) {
+        setUserStats(stats);
       }
     } catch (error) {
       console.error('❌ Error cargando stats:', error);
@@ -214,15 +214,18 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
 
   const updateUserItemEquippedStatus = async (itemId: number, equipped: boolean) => {
     try {
-      await fetch(`${SUPABASE_URL}/rest/v1/user_items?id=eq.${itemId}`, {
+      const response = await fetch(`${API_BASE}/updateItemEquipped`, {
         method: 'PATCH',
         headers: {
-          'apikey': SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ equipped })
+        body: JSON.stringify({ itemId, equipped }),
       });
+
+      if (!response.ok) {
+        throw new Error('Error actualizando item');
+      }
+
       await loadUserItems();
     } catch (error) {
       console.error('❌ Error actualizando estado de item:', error);
@@ -657,16 +660,7 @@ export default function Inventory({ userData, onBack }: InventoryProps) {
 
                                   // Si el item ya está equipado (arrastrado desde slot de equipo), desequipar
                                   if (dragged.equipped) {
-                                    await fetch(`${SUPABASE_URL}/rest/v1/user_items?id=eq.${dragged.id}`, {
-                                      method: 'PATCH',
-                                      headers: {
-                                        'apikey': SUPABASE_SERVICE_KEY,
-                                        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-                                        'Content-Type': 'application/json'
-                                      },
-                                      body: JSON.stringify({ equipped: false })
-                                    });
-                                    await loadUserItems();
+                                    await updateUserItemEquippedStatus(dragged.id, false);
                                   }
                                 } catch (err) {
                                   console.error('Drop error:', err);

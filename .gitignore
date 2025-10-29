@@ -6,6 +6,8 @@ dist/
 
 # Config files with sensitive data
 config.json
+.env.local
+.env
 
 # Test files
 test-moodle-connection.js
@@ -24,3 +26,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Local Netlify folder
+.netlify
