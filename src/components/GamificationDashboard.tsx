@@ -25,7 +25,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
   const [totalPoints, setTotalPoints] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [displayLevel, setDisplayLevel] = useState(1); // Nivel que se muestra en la UI
-  const [xpForNextLevel, setXpForNextLevel] = useState(100);
+  const [_xpForNextLevel, setXpForNextLevel] = useState(100);
   const [xpProgress, setXpProgress] = useState(0);
   const [animatedProgress, setAnimatedProgress] = useState(0);
   const [previousProgress, setPreviousProgress] = useState(0);
@@ -84,20 +84,17 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
       return { points: currentMoodlePoints, level, leveledUp: false, oldLevel: level, oldPoints: currentMoodlePoints };
     }
 
-    let oldSupabasePoints = 0;
-    let oldLevel = 1;
-
     try {
       setIsSyncing(true);
       console.log('🔄 Iniciando sincronización completa con Supabase (via serverless)...');
 
       // Llamar a la función serverless que hace toda la sincronización
       const syncResponse = await fetch(`${API_BASE}/syncUserProgress`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
           userId: userData.id,
           currentMoodlePoints,
           coursesData,
@@ -116,7 +113,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
         return { points: currentMoodlePoints, level, leveledUp: false, oldLevel: level, oldPoints: currentMoodlePoints };
       }
 
-      return {
+      return { 
         points: syncResult.points,
         level: syncResult.level,
         leveledUp: syncResult.leveledUp,
@@ -815,7 +812,7 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                   }}
                   title={badge.name}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
+                      e.currentTarget.style.transform = 'scale(1.1)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)';
@@ -870,9 +867,9 @@ export default function GamificationDashboard({ userData }: GamificationDashboar
                       fontSize: '24px'
                     }}>
                       {badge.icon || badge.name.split(' ')[0]}
-                    </div>
-                  )}
                 </div>
+                  )}
+            </div>
                 ))
               )}
             </div>
